@@ -1,0 +1,109 @@
+/* (c) https://github.com/MontiCore/monticore */
+
+plugins {
+  id "monticore" version "$version" // MontiCore Plugin
+}
+
+
+task buildMC {
+  dependsOn gradle.includedBuild("monticore").task(":buildMC")
+  dependsOn gradle.includedBuild("monticore-generator").task(":build")
+  dependsOn gradle.includedBuild("monticore").task(":testIT")
+}
+
+task buildAutomaton {
+  dependsOn gradle.includedBuild("automaton").task(":build")
+}
+
+task buildFeatureDiagram {
+  dependsOn gradle.includedBuild("feature-diagram").task(":build")
+}
+
+task buildOD {
+  dependsOn gradle.includedBuild("object-diagram").task(":build")
+}
+
+task buildSD{
+  dependsOn gradle.includedBuild("sequence-diagram").task(":build")
+}
+
+task buildJson {
+  dependsOn gradle.includedBuild("json").task(":build")
+}
+
+task buildXML {
+  dependsOn gradle.includedBuild("xml").task(":build")
+}
+
+task buildOCL {
+  dependsOn gradle.includedBuild("ocl").task(":build")
+}
+
+task buildCD4A {
+  dependsOn gradle.includedBuild("cd4analysis").task(":build")
+}
+
+task buildSC {
+  dependsOn gradle.includedBuild("statecharts").task(":build")
+}
+
+
+task buildSECommons {
+  dependsOn gradle.includedBuild("se-commons").task(":build")
+}
+
+task buildAll {
+  dependsOn( buildMC,
+          buildAutomaton,
+          buildCD4A,
+          buildFeatureDiagram,
+          buildOD,
+          buildSD,
+          buildJson,
+          buildOCL,
+          buildSC,
+          buildXML,
+          buildSECommons
+  )
+}
+
+task cleanAll {
+  dependsOn gradle.includedBuild("automaton").task(":clean")
+  dependsOn gradle.includedBuild("feature-diagram").task(":clean")
+  dependsOn gradle.includedBuild("json").task(":clean")
+  dependsOn gradle.includedBuild("monticore").task(":cleanMC")
+  dependsOn gradle.includedBuild("monticore-generator").task(":clean")
+  dependsOn gradle.includedBuild("object-diagram").task(":clean")
+  dependsOn gradle.includedBuild("sequence-diagram").task(":clean")
+  dependsOn gradle.includedBuild("statecharts").task(":clean")
+  dependsOn gradle.includedBuild("siunits").task(":clean")
+  dependsOn gradle.includedBuild("ocl").task(":clean")
+  dependsOn gradle.includedBuild("cd4analysis").task(":clean")
+  dependsOn gradle.includedBuild("xml").task(":clean")
+  dependsOn gradle.includedBuild("se-commons").task(":cleanAll")
+}
+
+
+task buildCheck {
+  dependsOn buildAll
+  doLast {
+    boolean nonInc = false
+    gradle.taskGraph.getAllTasks().each {
+      if(!it.getName().equals(name)) {
+        if (!it.getState().getUpToDate()) {
+          nonInc = true
+          logger.lifecycle("build was not incremental " + it.getName() + " was executed again")
+        }
+        
+      }
+    }
+    if (nonInc){
+      throw new GradleException("build was not incremental")
+    }
+  }
+}
+
+
+defaultTasks('buildAll')
+
+
