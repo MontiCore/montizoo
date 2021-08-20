@@ -12,6 +12,7 @@ submodules in combination with Gradle's composite builds.
 ```console
 git clone --recurse-submodules https://github.com/MontiCore/montizoo.git
 cd montizoo
+git submodule foreach -q --recursive 'git checkout $(git config -f $toplevel/.gitmodules submodule.$name.branch || echo master)'
 git submodule update --remote --merge
 gradle
 ```
@@ -40,6 +41,11 @@ git clone --recurse-submodules https://github.com/MontiCore/montizoo.git
 In case the repository was already cloned without `--recurse-submodules` use the following:
 ```
 git submodule update --init --recursive
+```
+
+To track the latest changes of submodules execute:
+```
+git submodule foreach -q --recursive 'git checkout $(git config -f $toplevel/.gitmodules submodule.$name.branch || echo master)'
 ```
 
 ### Updating
