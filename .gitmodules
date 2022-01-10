@@ -13,11 +13,11 @@
 [submodule "feature-diagram"]
 	path = feature-diagram
 	url = https://github.com/MontiCore/feature-diagram.git
-	branch = master
+	branch = develop
 [submodule "cd4analysis"]
 	path = cd4analysis
 	url = https://github.com/MontiCore/cd4analysis.git
-	branch = master
+	branch = develop
 [submodule "json"]
 	path = json
 	url = https://github.com/MontiCore/json.git
@@ -25,15 +25,15 @@
 [submodule "xml"]
 	path = xml
 	url = https://github.com/MontiCore/xml.git
-	branch = master
+	branch = develop
 [submodule "sequence-diagram"]
 	path = sequence-diagram
 	url = https://github.com/MontiCore/sequence-diagram.git
-	branch = master
+	branch = dev
 [submodule "siunits"]
 	path = siunits
-	branch = master
 	url = https://github.com/MontiCore/siunits.git
+	branch = dev
 [submodule "ocl"]
 	path = ocl
 	url = https://github.com/MontiCore/ocl.git
@@ -45,4 +45,4 @@
 [submodule "object-diagram"]
 	path = object-diagram
 	url = https://github.com/MontiCore/object-diagram.git
-	branch = master
+	branch = dev
